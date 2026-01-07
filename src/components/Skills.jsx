@@ -16,7 +16,7 @@ const skillCategories = [
     percentage: 85,
     description: "Building robust server-side applications, RESTful APIs, and database architectures using Node.js and Laravel. Experienced in creating scalable backend systems with proper authentication, security, and performance optimization.",
     color: "#0ea5e9",
-    stack: ["Node.js", "Laravel", "PHP", "Express.js", "REST APIs", "JWT", "MySQL", "PostgreSQL"]
+    stack: ["Node.js", "Laravel", "PHP", "Dbeaver", "REST APIs",  "MySQL", ]
   },
   {
     title: "Mobile Development",

@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const links = [
   { name: "Home", id: "home" },
@@ -11,43 +12,98 @@ const links = [
 
 function Navbar() {
   const [activeLink, setActiveLink] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const isManualScroll = useRef(false);
   const scrollTimeout = useRef(null);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // Changed from 768 to 1024 for earlier hamburger
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Handle scroll effect for navbar transparency
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu on resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleScroll = (id) => {
     const section = document.getElementById(id);
     setActiveLink(id);
+    setIsMobileMenuOpen(false); // Close mobile menu after click
     
-    // Set flag to prevent auto scroll detection
     isManualScroll.current = true;
     
-    // Clear any existing timeout
     if (scrollTimeout.current) {
       clearTimeout(scrollTimeout.current);
     }
     
-    // Reset flag after scroll completes
     scrollTimeout.current = setTimeout(() => {
       isManualScroll.current = false;
-    }, 1000); // 1 second should be enough for smooth scroll
+    }, 1000);
 
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
+      // Add offset for mobile to not touch the home section
+      const offset = isMobile ? 80 : 0;
+      const elementPosition = section.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
       });
     }
   };
 
-  const handleResumeDownload = () => {
-    const resumeUrl = "/resume.pdf";
-    window.open(resumeUrl, "_blank");
-  };
+ const handleResumeDownload = () => {
+  // Make sure the path matches your file location exactly
+  // If it's directly in public folder:
+  const resumeUrl = "/lemark.pdf"; // lowercase "l" to match your filename
+  
+  // Create anchor element for download
+  const link = document.createElement('a');
+  link.href = resumeUrl;
+  
+  // Set the download attribute with a nice filename for users
+  link.download = 'Lemark-CV.pdf'; // Users will see this as the filename
+  
+  // Append to body, click, and remove
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   // Handle scroll to update active link
   useEffect(() => {
     const handleScrollUpdate = () => {
-      // Don't update if we're manually scrolling
       if (isManualScroll.current) return;
       
       const sections = links.map(link => ({
@@ -58,7 +114,6 @@ function Navbar() {
       let current = "home";
       const scrollPosition = window.scrollY + 100;
       
-      // Find which section is currently in view
       for (let i = 0; i < sections.length; i++) {
         const section = sections[i];
         if (section.element) {
@@ -73,7 +128,6 @@ function Navbar() {
         }
       }
       
-      // Also check if we're at the bottom of the page
       if (scrollPosition + window.innerHeight >= document.body.scrollHeight - 100) {
         current = "contact";
       }
@@ -84,7 +138,6 @@ function Navbar() {
     window.addEventListener('scroll', handleScrollUpdate);
     window.addEventListener('resize', handleScrollUpdate);
     
-    // Initial call
     handleScrollUpdate();
     
     return () => {
@@ -96,163 +149,305 @@ function Navbar() {
     };
   }, []);
 
+  // Navbar background style based on scroll and mobile menu
+  const navbarStyle = {
+    background: isMobileMenuOpen 
+      ? "rgba(15, 23, 42, 0.98)" 
+      : isScrolled 
+      ? "rgba(15, 23, 42, 0.92)" 
+      : "rgba(15, 23, 42, 0)",
+    backdropFilter: isMobileMenuOpen || isScrolled ? "blur(15px)" : "none",
+  };
+
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      style={{
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "1.2rem clamp(2rem, 6vw, 5rem)",
-        background: "rgba(15, 23, 42, 0.92)",
-        backdropFilter: "blur(15px)",
-        borderBottom: "1px solid rgba(56, 189, 248, 0.2)",
-        zIndex: 1000,
-        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.2)",
-        transition: "all 0.3s ease",
-      }}
-    >
-      {/* LOGO */}
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+    <>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
         style={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
           display: "flex",
           alignItems: "center",
-          gap: "1rem",
-          cursor: "pointer",
+          justifyContent: "space-between",
+          padding: "1.2rem clamp(1.5rem, 4vw, 5rem)",
+          ...navbarStyle,
+          borderBottom: isScrolled ? "1px solid rgba(56, 189, 248, 0.2)" : "none",
+          zIndex: 1000,
+          boxShadow: isScrolled ? "0 4px 30px rgba(0, 0, 0, 0.2)" : "none",
+          transition: "all 0.3s ease",
         }}
-        onClick={() => handleScroll("home")}
       >
-        <div
+        {/* LOGO */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           style={{
-            width: "48px",
-            height: "48px",
-            borderRadius: "12px",
-            background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            fontSize: "1.4rem",
-            color: "#0f172a",
-            boxShadow: "0 4px 12px rgba(56, 189, 248, 0.3)",
+            gap: "1rem",
+            cursor: "pointer",
           }}
+          onClick={() => handleScroll("home")}
         >
-          L
-        </div>
-        <span
-          style={{
-            fontSize: "1.6rem",
-            fontWeight: 700,
-            color: "#38bdf8",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          LMKK
-        </span>
-      </motion.div>
+          <div
+            style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "12px",
+              background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "1.4rem",
+              color: "#0f172a",
+              boxShadow: "0 4px 12px rgba(56, 189, 248, 0.3)",
+            }}
+          >
+            L
+          </div>
+          <span
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              color: "#38bdf8",
+              letterSpacing: "-0.5px",
+            }}
+          >
+            LMKK
+          </span>
+        </motion.div>
 
-      {/* NAVIGATION LINKS */}
-      <div
-        style={{
-          display: "flex",
-          gap: "clamp(2rem, 4vw, 4rem)",
-          alignItems: "center",
-        }}
-      >
-        {links.map((link) => (
+        {/* DESKTOP NAVIGATION LINKS - Hidden on mobile/tablet */}
+        {!isMobile && (
+          <div
+            style={{
+              display: "flex",
+              gap: "clamp(2rem, 4vw, 4rem)",
+              alignItems: "center",
+            }}
+          >
+            {links.map((link) => (
+              <motion.button
+                key={link.id}
+                onClick={() => handleScroll(link.id)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: activeLink === link.id 
+                    ? "#38bdf8" 
+                    : isScrolled 
+                    ? "rgba(255, 255, 255, 0.9)" 
+                    : "rgba(255, 255, 255, 0.95)",
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  position: "relative",
+                  padding: "0.8rem 0",
+                  letterSpacing: "0.3px",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                {link.name}
+                {activeLink === link.id && (
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      position: "absolute",
+                      bottom: "6px",
+                      left: 0,
+                      height: "3px",
+                      background: "#38bdf8",
+                      borderRadius: "3px",
+                      boxShadow: "0 2px 8px rgba(56, 189, 248, 0.3)",
+                    }}
+                  />
+                )}
+              </motion.button>
+            ))}
+          </div>
+        )}
+
+        {/* DESKTOP RESUME BUTTON - Hidden on mobile/tablet */}
+        {!isMobile && (
           <motion.button
-            key={link.id}
-            onClick={() => handleScroll(link.id)}
-            whileHover={{ scale: 1.05, y: -2 }}
+            onClick={handleResumeDownload}
+            whileHover={{ 
+              scale: 1.05, 
+              boxShadow: "0 10px 30px rgba(56, 189, 248, 0.4)" 
+            }}
             whileTap={{ scale: 0.95 }}
             style={{
-              background: "none",
+              padding: "0.8rem 1.8rem",
+              height: "48px",
+              background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
+              color: "#0f172a",
               border: "none",
-              color: activeLink === link.id 
-                ? "#38bdf8" 
-                : "rgba(255, 255, 255, 0.9)",
+              borderRadius: "12px",
               fontSize: "1.1rem",
               fontWeight: 600,
               cursor: "pointer",
-              position: "relative",
-              padding: "0.8rem 0",
-              letterSpacing: "0.3px",
               transition: "all 0.3s ease",
+              whiteSpace: "nowrap",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.6rem",
+              boxShadow: "0 4px 15px rgba(56, 189, 248, 0.2)",
+              lineHeight: "1",
             }}
           >
-            {link.name}
-            {activeLink === link.id && (
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  position: "absolute",
-                  bottom: "6px",
-                  left: 0,
-                  height: "3px",
-                  background: "#38bdf8",
-                  borderRadius: "3px",
-                  boxShadow: "0 2px 8px rgba(56, 189, 248, 0.3)",
-                }}
-              />
-            )}
+            <svg 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2"
+              style={{ marginBottom: "1px" }}
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Resume
           </motion.button>
-        ))}
-      </div>
+        )}
 
-      {/* RESUME BUTTON */}
-      <motion.button
-        onClick={handleResumeDownload}
-        whileHover={{ 
-          scale: 1.05, 
-          boxShadow: "0 10px 30px rgba(56, 189, 248, 0.4)" 
-        }}
-        whileTap={{ scale: 0.95 }}
-        style={{
-          padding: "0.8rem 1.8rem",
-          height: "48px",
-          background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
-          color: "#0f172a",
-          border: "none",
-          borderRadius: "12px",
-          fontSize: "1.1rem",
-          fontWeight: 600,
-          cursor: "pointer",
-          transition: "all 0.3s ease",
-          whiteSpace: "nowrap",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.6rem",
-          boxShadow: "0 4px 15px rgba(56, 189, 248, 0.2)",
-          lineHeight: "1",
-        }}
-      >
-        {/* Download Icon */}
-        <svg 
-          width="18" 
-          height="18" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2"
-          style={{ marginBottom: "1px" }}
-        >
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        Resume
-      </motion.button>
-    </motion.nav>
+        {/* HAMBURGER MENU BUTTON - Shows on mobile/tablet OR when desktop is minimized */}
+        {isMobile && (
+          <motion.button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              background: "rgba(56, 189, 248, 0.1)",
+              border: "1px solid rgba(56, 189, 248, 0.3)",
+              borderRadius: "8px",
+              width: "48px",
+              height: "48px",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "#38bdf8",
+              fontSize: "1.5rem",
+              display: "flex",
+            }}
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </motion.button>
+        )}
+      </motion.nav>
+
+      {/* MOBILE/TABLET MENU OVERLAY */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              top: "80px",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(15, 23, 42, 0.98)",
+              backdropFilter: "blur(20px)",
+              zIndex: 999,
+              display: "flex",
+              flexDirection: "column",
+              padding: "2rem 1.5rem",
+              overflow: "auto",
+            }}
+          >
+            {/* Mobile Navigation Links */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {links.map((link) => (
+                <motion.button
+                  key={link.id}
+                  onClick={() => handleScroll(link.id)}
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: links.indexOf(link) * 0.1 }}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: activeLink === link.id ? "#38bdf8" : "rgba(255, 255, 255, 0.9)",
+                    fontSize: "1.4rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    padding: "1rem 1.5rem",
+                    textAlign: "left",
+                    borderRadius: "12px",
+                    transition: "all 0.3s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    borderLeft: activeLink === link.id ? "4px solid #38bdf8" : "none",
+                  }}
+                >
+                  {link.name}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Mobile Resume Button */}
+            <motion.button
+              onClick={handleResumeDownload}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                marginTop: "auto",
+                padding: "1rem 1.5rem",
+                background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
+                color: "#0f172a",
+                border: "none",
+                borderRadius: "12px",
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.8rem",
+              }}
+            >
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download Resume
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Spacer to prevent navbar from overlapping content */}
+      <div style={{ 
+        height: isMobile ? "80px" : "60px",
+        width: "100%",
+        position: "relative",
+        zIndex: 1,
+      }} />
+    </>
   );
 }
 

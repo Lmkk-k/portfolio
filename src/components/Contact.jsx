@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane, FaPhone, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
+import emailjs from "emailjs-com";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ function Contact() {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null); // null, "success", or "error"
 
   const handleChange = (e) => {
     setFormData({
@@ -24,13 +25,43 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    setTimeout(() => {
+    // Your EmailJS credentials
+    const serviceID = 'service_8n6gvnu';
+    const templateID = 'template_ooutr1p';
+    const publicKey = 'Qat85Y1apOX9aQ3Lm'; // Your public key
+    
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        time: new Date().toLocaleString(),
+        to_email: 'lemarkrosales123@gmail.com',
+        reply_to: formData.email,
+        to_name: 'Lemark',
+        site_url: window.location.origin,
+        year: new Date().getFullYear()
+      };
+      
+      await emailjs.send(serviceID, templateID, templateParams, publicKey);
+      
+      // Success
       setIsSubmitting(false);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       
+      // Clear success message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 1500);
+      
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setIsSubmitting(false);
+      setSubmitStatus("error");
+      
+      // Clear error message after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const contactInfo = [
@@ -38,7 +69,7 @@ function Contact() {
       icon: <FaEnvelope />,
       title: "Email",
       value: "lemarkrosales123@gmail.com",
-      // action: "mailto:lemarkrosales123@gmail.com",
+      action: "mailto:lemarkrosales123@gmail.com", // Uncommented - now clickable
       color: "#38bdf8"
     },
     {
@@ -59,7 +90,7 @@ function Contact() {
       icon: <FaPhone />,
       title: "Phone",
       value: "+63 960 852 2397",
-      // action: "tel:+639123456789",
+      action: "tel:+639608522397", // Uncommented - now clickable
       color: "#10b981"
     }
   ];
@@ -372,22 +403,28 @@ function Contact() {
                     )}
                   </motion.button>
                   
-                  {submitStatus === "success" && (
+                  {submitStatus && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       style={{
                         padding: "1rem",
-                        background: "rgba(34, 197, 94, 0.1)",
-                        border: "1px solid rgba(34, 197, 94, 0.3)",
+                        background: submitStatus === "success" 
+                          ? "rgba(34, 197, 94, 0.1)" 
+                          : "rgba(239, 68, 68, 0.1)",
+                        border: submitStatus === "success"
+                          ? "1px solid rgba(34, 197, 94, 0.3)"
+                          : "1px solid rgba(239, 68, 68, 0.3)",
                         borderRadius: "10px",
-                        color: "#4ade80",
+                        color: submitStatus === "success" ? "#4ade80" : "#f87171",
                         textAlign: "center",
                         fontSize: "0.95rem",
                         marginTop: "1rem"
                       }}
                     >
-                      ✅ Message sent successfully! I'll get back to you soon.
+                      {submitStatus === "success" 
+                        ? "✅ Message sent successfully! I'll get back to you soon."
+                        : "❌ Failed to send message. Please try again or contact me directly."}
                     </motion.div>
                   )}
                 </div>
@@ -491,8 +528,8 @@ function Contact() {
                 <motion.a
                   key={index}
                   href={info.action}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={info.action?.startsWith('http') ? "_blank" : undefined}
+                  rel={info.action?.startsWith('http') ? "noopener noreferrer" : undefined}
                   whileHover={{ x: 5 }}
                   style={{
                     display: "flex",
@@ -503,7 +540,8 @@ function Contact() {
                     background: "rgba(56, 189, 248, 0.03)",
                     borderRadius: "12px",
                     border: "1px solid rgba(56, 189, 248, 0.1)",
-                    transition: "all 0.3s ease"
+                    transition: "all 0.3s ease",
+                    cursor: "pointer"
                   }}
                 >
                   <div style={{
