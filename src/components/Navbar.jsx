@@ -181,45 +181,32 @@ function Navbar() {
         }}
       >
         {/* LOGO */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1rem",
-            cursor: "pointer",
-          }}
-          onClick={() => handleScroll("home")}
-        >
-          <div
+          <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+       display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+        cursor: "pointer",
+      }}
+      onClick={() => handleScroll("home")}
+  >
+      {/* Replace this div with img tag */}
+      <img
+              src="/LR logo.png"  // Your logo from public folder
+            alt="LR Logo"
             style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "12px",
-              background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: "bold",
-              fontSize: "1.4rem",
-              color: "#0f172a",
-              boxShadow: "0 4px 12px rgba(56, 189, 248, 0.3)",
-            }}
-          >
-            L
-          </div>
-          <span
-            style={{
-              fontSize: "1.6rem",
-              fontWeight: 700,
-              color: "#38bdf8",
-              letterSpacing: "-0.5px",
-            }}
-          >
-            LMKK
-          </span>
-        </motion.div>
+            width: "48px",
+            height: "48px",
+            borderRadius: "12px",
+            objectFit: "cover",  // Makes sure image fills the space nicely
+            boxShadow: "0 1px 5px rgba(56, 189, 248, 0.3)",
+            filter: "brightness(0) invert(1)", // Makes logo white
+
+    }}
+  />
+</motion.div>
 
         {/* DESKTOP NAVIGATION LINKS - Hidden on mobile/tablet */}
         {!isMobile && (

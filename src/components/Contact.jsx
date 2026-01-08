@@ -101,6 +101,13 @@ function Contact() {
     { icon: <FaInstagram />, url: "https://www.instagram.com/lemarkkkk_/", label: "Instagram" }
   ];
 
+  // Technologies array
+  const technologies = [
+    "React", "ASP.NET", "Godot", "Laravel", 
+    "Node.js", "C#", "GDScript", "Blender",
+    "SQL", "DBeaver", "Javascript", "Docker"
+  ];
+
   return (
     <section
       id="contact"
@@ -662,14 +669,60 @@ function Contact() {
         </div>
       </div>
 
-      {/* Location Info */}
+      {/* Technologies Section - Added above location info */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        viewport={{ once: true }}
+        style={{
+          marginTop: "4rem",
+          textAlign: "center"
+        }}
+      >
+        <h4 style={{ 
+          fontSize: "1.3rem", 
+          marginBottom: "1.5rem",
+          color: "#38bdf8",
+          fontWeight: 600
+        }}>
+          Technologies I Work With
+        </h4>
+        <div style={{ 
+          display: "flex", 
+          flexWrap: "wrap", 
+          gap: "0.5rem", 
+          justifyContent: "center",
+          maxWidth: "800px",
+          margin: "0 auto"
+        }}>
+          {technologies.map((tech, index) => (
+            <span
+              key={index}
+              style={{
+                padding: "0.4rem 0.9rem",
+                background: "rgba(56, 189, 248, 0.07)",
+                borderRadius: "12px",
+                fontSize: "0.85rem",
+                color: "#7dd3fc",
+                border: "1px solid rgba(56, 189, 248, 0.1)",
+                fontWeight: 500
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Location Info - Now below technologies */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
         viewport={{ once: true }}
         style={{
-          marginTop: "4rem",
+          marginTop: "3rem",
           textAlign: "center"
         }}
       >

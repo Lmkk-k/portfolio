@@ -301,7 +301,7 @@ function Home() {
               whileHover={!isMobile ? { color: "#38bdf8" } : {}}
               transition={{ duration: 0.3 }}
             >
-              <span style={{ color: "#38bdf8" }}>Lemark Jone Y. Rosales</span>
+              <span style={{ color: "#38bdf8" }}> Lemark Y. Rosales</span>
             </motion.h1>
             
             {/* Decorative line under name */}

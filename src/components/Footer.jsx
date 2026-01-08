@@ -8,11 +8,9 @@ function Footer() {
     { icon: <FaInstagram />, url: "https://www.instagram.com/lemarkkkk_/", label: "Instagram" }
   ];
 
-  const technologies = [
-    "React", "ASP.NET", "Godot", "Laravel", 
-    "Node.js", "C#", "GDScript", "Blender",
-    "SQL", "DBeaver", "Javascript", "Docker"
-  ];
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <footer style={{
@@ -27,7 +25,7 @@ function Footer() {
         position: "relative",
         zIndex: 1
       }}>
-        {/* Top Row: LMKK + Description + Social Icons */}
+        {/* Top Row: Logo + Social Icons */}
         <div style={{
           display: "flex",
           alignItems: "center",
@@ -36,7 +34,7 @@ function Footer() {
           flexWrap: "wrap",
           gap: "2rem"
         }}>
-          {/* Left: LMKK Logo and Description */}
+          {/* Left: Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -44,46 +42,35 @@ function Footer() {
             viewport={{ once: true }}
             style={{
               display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-              maxWidth: "400px"
+              alignItems: "center",
+              flexShrink: 0
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-              <div style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
+            {/* Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                color: "#0f172a"
-              }}>
-                L
-              </div>
-              <h3 style={{
-                fontSize: "1.5rem",
-                background: "linear-gradient(90deg, #38bdf8, #7dd3fc)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                fontWeight: 700
-              }}>
-                LMKK
-              </h3>
-            </div>
-            
-            <p style={{ 
-              fontSize: "0.95rem", 
-              opacity: 0.8, 
-              lineHeight: 1.6,
-              marginLeft: "calc(40px + 0.8rem)"
-            }}>
-              Full-Stack Developer & Game Developer creating impactful digital experiences through code and creativity.
-            </p>
+                cursor: "pointer",
+                flexShrink: 0
+              }}
+              onClick={scrollToTop}
+            >
+              <img
+                src="/LR logo.png"
+                alt="LR Logo"
+                style={{
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "12px",
+                  objectFit: "cover",
+                  boxShadow: "0 1px 5px rgba(56, 189, 248, 0.3)",
+                  filter: "brightness(0) invert(1)",
+                }}
+              />
+            </motion.div>
           </motion.div>
 
           {/* Right: Social Icons */}
@@ -94,7 +81,8 @@ function Footer() {
             viewport={{ once: true }}
             style={{
               display: "flex",
-              gap: "0.8rem"
+              gap: "0.8rem",
+              flexShrink: 0
             }}
           >
             {socialLinks.map((social, index) => (
@@ -127,46 +115,6 @@ function Footer() {
           </motion.div>
         </div>
 
-        {/* Middle: Technologies Centered */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginBottom: "3rem"
-          }}
-        >
-          <h4 style={{ 
-            fontSize: "1.2rem", 
-            marginBottom: "1.5rem",
-            color: "#38bdf8",
-            fontWeight: 600
-          }}>
-            Technologies
-          </h4>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center" }}>
-            {technologies.map((tech, index) => (
-              <span
-                key={index}
-                style={{
-                  padding: "0.3rem 0.8rem",
-                  background: "rgba(56, 189, 248, 0.07)",
-                  borderRadius: "12px",
-                  fontSize: "0.8rem",
-                  color: "#7dd3fc",
-                  border: "1px solid rgba(56, 189, 248, 0.1)"
-                }}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
         {/* Divider */}
         <div style={{
           height: "1px",
@@ -174,7 +122,7 @@ function Footer() {
           margin: "2rem 0"
         }} />
 
-        {/* Bottom: Back to Top Button */}
+        {/* Bottom: Only Back to Top Button */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -186,10 +134,11 @@ function Footer() {
             textAlign: "center"
           }}
         >
+          {/* Back to Top Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={scrollToTop}
             style={{
               padding: "0.6rem 1.5rem",
               background: "rgba(56, 189, 248, 0.1)",
