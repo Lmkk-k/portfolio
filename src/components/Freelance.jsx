@@ -177,7 +177,7 @@ const Freelance = () => {
   };
 
   return (
-    <div className="freelance-container">
+      <div id="freelance" className="freelance-container">
       {/* Background Element */}
       <div className="freelance-bg-element"></div>
 
