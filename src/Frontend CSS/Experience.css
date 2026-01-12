@@ -1,0 +1,712 @@
+/* Experience.css */
+
+/* Main Container */
+.experience-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: transparent;
+  padding: 3rem 1.5rem;
+}
+
+/* Background Elements */
+.experience-bg-element {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.03) 0%, transparent 70%);
+  top: 10%;
+  left: -10%;
+  z-index: -1;
+  animation: rotateAndScale 25s linear infinite;
+}
+
+/* Section Title */
+.experience-title-container {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.experience-title {
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  font-size: 2.5rem;
+}
+
+.experience-title-text {
+  color: #38bdf8;
+  position: relative;
+}
+
+.experience-title-underline {
+  height: 4px;
+  background: linear-gradient(90deg, #38bdf8, transparent);
+  border-radius: 2px;
+  margin: 0.5rem auto 0;
+  transform-origin: left center;
+  width: 60px;
+}
+
+.experience-subtitle {
+  opacity: 0.8;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+/* Tabs */
+.experience-tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.experience-tab {
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+  border-radius: 12px;
+  border: 2px solid;
+  background: transparent;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.experience-tab:hover {
+  transform: scale(1.05);
+}
+
+.experience-tab:active {
+  transform: scale(0.95);
+}
+
+.experience-tab-active {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.experience-tab-inactive {
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Experience Cards Grid */
+.experience-grid {
+  display: grid;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* Experience Card */
+.experience-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  padding: 2rem;
+}
+
+.experience-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(56, 189, 248, 0.12);
+}
+
+/* Timeline Dot */
+.timeline-dot {
+  position: absolute;
+  left: -12px;
+  top: 3rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #38bdf8;
+  border: 4px solid rgba(15, 23, 42, 0.9);
+  animation: pulse 2s infinite;
+}
+
+/* Card Content */
+.experience-card-content {
+  margin-left: 0.5rem;
+}
+
+.experience-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.experience-role-container {
+  flex: 1;
+}
+
+.experience-role {
+  margin-bottom: 0.3rem;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+  font-size: 1.4rem;
+}
+
+.experience-role:hover {
+  color: #38bdf8;
+}
+
+.experience-company {
+  color: #38bdf8;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+}
+
+.experience-date {
+  padding: 0.4rem 1.2rem;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  align-self: flex-start;
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.experience-date:hover {
+  transform: scale(1.05);
+}
+
+/* Tech Stack */
+.tech-stack-container {
+  margin-bottom: 1.5rem;
+}
+
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tech-stack-item {
+  padding: 0.3rem 0.8rem;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 15px;
+  font-weight: 500;
+  color: #7dd3fc;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+}
+
+.tech-stack-item:hover {
+  transform: scale(1.05);
+  background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* Points List */
+.experience-points-list {
+  line-height: 1.6;
+  padding-left: 1rem;
+  font-size: 0.95rem;
+}
+
+.experience-point {
+  margin-bottom: 0.7rem;
+  position: relative;
+  list-style: none;
+}
+
+.experience-point-bullet {
+  position: absolute;
+  left: -1rem;
+  color: #38bdf8;
+  font-size: 1rem;
+}
+
+/* Education Section */
+.education-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.education-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  transition: all 0.3s ease;
+  padding: 3rem;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(56, 189, 248, 0.1);
+}
+
+/* Education Header */
+.education-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.education-degree {
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+  font-size: 2rem;
+}
+
+.education-degree:hover {
+  color: #38bdf8;
+}
+
+.education-university {
+  color: #38bdf8;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.education-meta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.education-meta-item {
+  padding: 0.5rem 1.5rem;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 24px;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.education-meta-item:hover {
+  transform: scale(1.05);
+}
+
+/* Education Description */
+.education-description {
+  background: rgba(56, 189, 248, 0.03);
+  border-left: 4px solid #38bdf8;
+  border-radius: 10px;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+}
+
+.education-description-text {
+  line-height: 1.7;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+/* Courses */
+.education-courses-title {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #38bdf8;
+  font-size: 1.3rem;
+}
+
+.education-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.education-course-item {
+  padding: 0.8rem 1rem;
+  background: rgba(56, 189, 248, 0.05);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.education-course-item:hover {
+  transform: scale(1.05) translateY(-3px);
+  background-color: rgba(56, 189, 248, 0.1);
+}
+
+/* Animations */
+@keyframes rotateAndScale {
+  0% {
+    rotate: 0deg;
+    scale: 1;
+  }
+  50% {
+    scale: 1.1;
+  }
+  100% {
+    rotate: 360deg;
+    scale: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) {
+  .experience-container {
+    padding: clamp(3rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+  }
+  
+  .experience-card-content {
+    margin-left: 1.5rem;
+  }
+  
+  .experience-points-list {
+    padding-left: 1.2rem;
+  }
+  
+  .experience-point-bullet {
+    left: -1.2rem;
+  }
+  
+  .experience-title {
+    font-size: 3rem;
+  }
+  
+  .experience-title-underline {
+    width: 80px;
+  }
+  
+  .experience-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .experience-card {
+    padding: 2.2rem;
+  }
+  
+  .experience-role {
+    font-size: 1.6rem;
+  }
+  
+  .experience-company {
+    font-size: 1.2rem;
+  }
+  
+  .experience-date {
+    font-size: 0.85rem;
+  }
+  
+  .experience-points-list {
+    font-size: 1rem;
+  }
+  
+  .tech-stack-item {
+    font-size: 0.8rem;
+  }
+  
+  .experience-bg-element {
+    width: 350px;
+    height: 350px;
+    left: -5%;
+  }
+  
+  .timeline-dot {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .experience-container {
+    padding: clamp(3rem, 5vw, 6rem) clamp(1.5rem, 6vw, 6rem);
+  }
+  
+  .experience-grid {
+    gap: 2.5rem;
+    max-width: 1200px;
+  }
+  
+  .experience-card {
+    padding: 2.5rem;
+  }
+  
+  .experience-title {
+    font-size: 3.5rem;
+  }
+  
+  .experience-title-underline {
+    width: 100px;
+  }
+  
+  .experience-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .experience-tab {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .experience-role {
+    font-size: 1.8rem;
+  }
+  
+  .experience-company {
+    font-size: 1.3rem;
+  }
+  
+  .experience-date {
+    font-size: 0.9rem;
+  }
+  
+  .experience-points-list {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+  
+  .tech-stack-item {
+    font-size: 0.85rem;
+  }
+  
+  .experience-bg-element {
+    width: 400px;
+    height: 400px;
+    left: -2%;
+  }
+  
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .education-degree {
+    font-size: 2rem;
+  }
+  
+  .education-university {
+    font-size: 1.3rem;
+  }
+  
+  .education-meta-item {
+    font-size: 0.95rem;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .experience-container {
+    padding: clamp(4rem, 6vw, 6rem) clamp(2rem, 8vw, 8rem);
+  }
+  
+  .experience-grid {
+    max-width: 1300px;
+    gap: 2.8rem;
+  }
+  
+  .experience-card {
+    padding: 2.8rem;
+  }
+  
+  .experience-title {
+    font-size: 4rem;
+  }
+  
+  .experience-title-underline {
+    width: 130px;
+  }
+  
+  .experience-subtitle {
+    font-size: 1.3rem;
+  }
+  
+  .experience-tab {
+    padding: 0.9rem 2.2rem;
+    font-size: 1.15rem;
+  }
+  
+  .experience-role {
+    font-size: 2rem;
+  }
+  
+  .experience-company {
+    font-size: 1.4rem;
+  }
+  
+  .experience-date {
+    font-size: 0.95rem;
+  }
+  
+  .experience-points-list {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .tech-stack-item {
+    font-size: 0.9rem;
+  }
+  
+  .experience-bg-element {
+    width: 450px;
+    height: 450px;
+    left: 3%;
+  }
+  
+  .timeline-dot {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1400px) {
+  .experience-container {
+    padding: clamp(4rem, 8vw, 8rem) clamp(2rem, 10vw, 12rem);
+  }
+  
+  .experience-grid {
+    max-width: 1400px;
+    gap: 3rem;
+  }
+  
+  .experience-card {
+    padding: 3rem;
+  }
+  
+  .experience-title {
+    font-size: 4.5rem;
+  }
+  
+  .experience-title-underline {
+    width: 150px;
+  }
+  
+  .experience-subtitle {
+    font-size: 1.4rem;
+  }
+  
+  .experience-tab {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .experience-tabs-container {
+    gap: 3rem;
+  }
+  
+  .experience-role {
+    font-size: 2.2rem;
+  }
+  
+  .experience-company {
+    font-size: 1.5rem;
+  }
+  
+  .experience-date {
+    font-size: 1rem;
+  }
+  
+  .experience-points-list {
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+  
+  .tech-stack-item {
+    font-size: 0.95rem;
+  }
+  
+  .experience-point-bullet {
+    font-size: 1.2rem;
+  }
+  
+  .experience-bg-element {
+    width: 500px;
+    height: 500px;
+    left: 5%;
+  }
+  
+  .timeline-dot {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .education-card {
+    padding: 3.5rem;
+  }
+  
+  .education-degree {
+    font-size: 2.2rem;
+  }
+  
+  .education-university {
+    font-size: 1.4rem;
+  }
+  
+  .education-description {
+    padding: 2rem;
+  }
+  
+  .education-description-text {
+    font-size: 1.15rem;
+  }
+  
+  .education-courses-title {
+    font-size: 1.4rem;
+  }
+  
+  .education-meta-item {
+    font-size: 1rem;
+  }
+  
+  .education-course-item {
+    padding: 1rem;
+    font-size: 1.05rem;
+  }
+  
+  .education-courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile-only adjustments */
+@media (max-width: 768px) {
+  .experience-tabs-container {
+    gap: 1.5rem;
+  }
+  
+  .experience-card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .experience-date {
+    align-self: flex-start;
+  }
+  
+  .education-meta {
+    gap: 1rem;
+  }
+}

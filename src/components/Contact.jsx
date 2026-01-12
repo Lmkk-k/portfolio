@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane, FaPhone, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
 import emailjs from "emailjs-com";
+import "../Frontend CSS/Contact.css";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ function Contact() {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // null, "success", or "error"
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,10 +26,9 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Your EmailJS credentials
     const serviceID = 'service_8n6gvnu';
     const templateID = 'template_ooutr1p';
-    const publicKey = 'Qat85Y1apOX9aQ3Lm'; // Your public key
+    const publicKey = 'Qat85Y1apOX9aQ3Lm';
     
     try {
       const templateParams = {
@@ -46,12 +46,10 @@ function Contact() {
       
       await emailjs.send(serviceID, templateID, templateParams, publicKey);
       
-      // Success
       setIsSubmitting(false);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       
-      // Clear success message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
       
     } catch (error) {
@@ -59,7 +57,6 @@ function Contact() {
       setIsSubmitting(false);
       setSubmitStatus("error");
       
-      // Clear error message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
     }
   };
@@ -69,7 +66,7 @@ function Contact() {
       icon: <FaEnvelope />,
       title: "Email",
       value: "lemarkrosales123@gmail.com",
-      action: "mailto:lemarkrosales123@gmail.com", // Uncommented - now clickable
+      action: "mailto:lemarkrosales123@gmail.com",
       color: "#38bdf8"
     },
     {
@@ -90,7 +87,7 @@ function Contact() {
       icon: <FaPhone />,
       title: "Phone",
       value: "+63 960 852 2397",
-      action: "tel:+639608522397", // Uncommented - now clickable
+      action: "tel:+639608522397",
       color: "#10b981"
     }
   ];
@@ -101,7 +98,6 @@ function Contact() {
     { icon: <FaInstagram />, url: "https://www.instagram.com/lemarkkkk_/", label: "Instagram" }
   ];
 
-  // Technologies array
   const technologies = [
     "React", "ASP.NET", "Godot", "Laravel", 
     "Node.js", "C#", "GDScript", "Blender",
@@ -109,17 +105,7 @@ function Contact() {
   ];
 
   return (
-    <section
-      id="contact"
-      style={{
-        minHeight: "100vh",
-        padding: "clamp(3rem, 5vw, 6rem) clamp(1.5rem, 4vw, 4rem)",
-        maxWidth: "1400px",
-        margin: "0 auto",
-        position: "relative",
-        overflow: "hidden"
-      }}
-    >
+    <section id="contact" className="contact-section">
       {/* Animated Background Elements */}
       <motion.div
         animate={{ 
@@ -131,16 +117,7 @@ function Contact() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        style={{
-          position: "absolute",
-          width: "300px",
-          height: "300px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, transparent 70%)",
-          top: "10%",
-          right: "5%",
-          zIndex: -1
-        }}
+        className="contact-animated-bg-1"
       />
       
       <motion.div
@@ -152,16 +129,7 @@ function Contact() {
           rotate: { duration: 40, repeat: Infinity, ease: "linear" },
           scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
         }}
-        style={{
-          position: "absolute",
-          width: "200px",
-          height: "200px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(139, 92, 246, 0.03) 0%, transparent 70%)",
-          bottom: "15%",
-          left: "5%",
-          zIndex: -1
-        }}
+        className="contact-animated-bg-2"
       />
 
       {/* SECTION HEADER */}
@@ -170,91 +138,43 @@ function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        style={{
-          textAlign: "center",
-          marginBottom: "4rem"
-        }}
+        className="contact-header"
       >
-        <motion.h2
-          style={{
-            fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
-            marginBottom: "1rem",
-            position: "relative",
-            display: "inline-block"
-          }}
-        >
-          <span style={{ color: "#38bdf8" }}>Get In Touch</span>
+        <motion.h2 className="contact-title">
+          <span>Get In Touch</span>
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: "100px" }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            style={{
-              height: "3px",
-              background: "linear-gradient(90deg, #38bdf8, transparent)",
-              borderRadius: "2px",
-              margin: "0.5rem auto 0"
-            }}
+            className="contact-title-line"
           />
         </motion.h2>
-        <p style={{ 
-          opacity: 0.8, 
-          fontSize: "1.1rem", 
-          maxWidth: "700px", 
-          margin: "1rem auto 0",
-          lineHeight: 1.6
-        }}>
+        <p className="contact-subtitle">
           Have a project in mind? Want to collaborate or just say hello? 
           I'm always open to discussing new opportunities and interesting ideas.
         </p>
       </motion.div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-        gap: "3rem",
-        alignItems: "stretch"
-      }}>
+      <div className="contact-container">
         {/* LEFT COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-          {/* Send a Message Form - Fixed height */}
+        <div className="contact-left-column">
+          {/* Send a Message Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            style={{
-              background: "rgba(15, 23, 42, 0.85)",
-              borderRadius: "20px",
-              border: "1px solid rgba(56, 189, 248, 0.15)",
-              padding: "2.5rem",
-              backdropFilter: "blur(10px)",
-              height: "650px",  // Fixed height
-              display: "flex",
-              flexDirection: "column"
-            }}
+            className="contact-card contact-form-card"
           >
-            <h3 style={{ 
-              fontSize: "1.8rem", 
-              marginBottom: "1.5rem",
-              color: "#38bdf8",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem"
-            }}>
+            <h3 className="contact-card-header">
               <FaPaperPlane /> Send a Message
             </h3>
             
-            <form onSubmit={handleSubmit} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", flex: 1 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                  <div>
-                    <label style={{
-                      display: "block",
-                      marginBottom: "0.5rem",
-                      fontSize: "0.9rem",
-                      color: "#7dd3fc",
-                      fontWeight: 500
-                    }}>
+            <form onSubmit={handleSubmit} className="contact-form">
+              <div className="contact-form-fields">
+                <div className="contact-form-row">
+                  <div className="form-group">
+                    <label className="form-label">
                       Your Name *
                     </label>
                     <input
@@ -263,27 +183,12 @@ function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      style={{
-                        width: "100%",
-                        padding: "0.8rem 1rem",
-                        background: "rgba(56, 189, 248, 0.05)",
-                        border: "1px solid rgba(56, 189, 248, 0.2)",
-                        borderRadius: "10px",
-                        color: "#f8fafc",
-                        fontSize: "1rem",
-                        transition: "all 0.3s ease"
-                      }}
+                      className="form-input"
                     />
                   </div>
                   
-                  <div>
-                    <label style={{
-                      display: "block",
-                      marginBottom: "0.5rem",
-                      fontSize: "0.9rem",
-                      color: "#7dd3fc",
-                      fontWeight: 500
-                    }}>
+                  <div className="form-group">
+                    <label className="form-label">
                       Email Address *
                     </label>
                     <input
@@ -292,28 +197,13 @@ function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      style={{
-                        width: "100%",
-                        padding: "0.8rem 1rem",
-                        background: "rgba(56, 189, 248, 0.05)",
-                        border: "1px solid rgba(56, 189, 248, 0.2)",
-                        borderRadius: "10px",
-                        color: "#f8fafc",
-                        fontSize: "1rem",
-                        transition: "all 0.3s ease"
-                      }}
+                      className="form-input"
                     />
                   </div>
                 </div>
                 
-                <div>
-                  <label style={{
-                    display: "block",
-                    marginBottom: "0.5rem",
-                    fontSize: "0.9rem",
-                    color: "#7dd3fc",
-                    fontWeight: 500
-                  }}>
+                <div className="form-group">
+                  <label className="form-label">
                     Subject *
                   </label>
                   <input
@@ -322,27 +212,12 @@ function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    style={{
-                      width: "100%",
-                      padding: "0.8rem 1rem",
-                      background: "rgba(56, 189, 248, 0.05)",
-                      border: "1px solid rgba(56, 189, 248, 0.2)",
-                      borderRadius: "10px",
-                      color: "#f8fafc",
-                      fontSize: "1rem",
-                      transition: "all 0.3s ease"
-                    }}
+                    className="form-input"
                   />
                 </div>
                 
-                <div style={{ flex: 2, minHeight: "200px" }}>
-                  <label style={{
-                    display: "block",
-                    marginBottom: "0.5rem",
-                    fontSize: "0.9rem",
-                    color: "#7dd3fc",
-                    fontWeight: 500
-                  }}>
+                <div className="form-group" style={{ flex: 2, minHeight: "200px" }}>
+                  <label className="form-label">
                     Your Message *
                   </label>
                   <textarea
@@ -350,20 +225,7 @@ function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      minHeight: "180px",
-                      padding: "0.8rem 1rem",
-                      background: "rgba(56, 189, 248, 0.05)",
-                      border: "1px solid rgba(56, 189, 248, 0.2)",
-                      borderRadius: "10px",
-                      color: "#f8fafc",
-                      fontSize: "1rem",
-                      resize: "vertical",
-                      transition: "all 0.3s ease",
-                      fontFamily: "inherit"
-                    }}
+                    className="form-textarea"
                   />
                 </div>
                 
@@ -371,36 +233,13 @@ function Contact() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    style={{
-                      width: "100%",
-                      padding: "1rem 2rem",
-                      background: isSubmitting 
-                        ? "rgba(56, 189, 248, 0.5)" 
-                        : "linear-gradient(135deg, #38bdf8, #0ea5e9)",
-                      color: "#0f172a",
-                      border: "none",
-                      borderRadius: "10px",
-                      fontSize: "1rem",
-                      fontWeight: 600,
-                      cursor: isSubmitting ? "not-allowed" : "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "0.5rem",
-                      transition: "all 0.3s ease"
-                    }}
+                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                    className="form-button"
                   >
                     {isSubmitting ? (
                       <>
-                        <motion.span
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          style={{ display: "inline-block" }}
-                        >
-                          ⏳
-                        </motion.span>
+                        <span className="spinner">⏳</span>
                         Sending...
                       </>
                     ) : (
@@ -414,20 +253,7 @@ function Contact() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      style={{
-                        padding: "1rem",
-                        background: submitStatus === "success" 
-                          ? "rgba(34, 197, 94, 0.1)" 
-                          : "rgba(239, 68, 68, 0.1)",
-                        border: submitStatus === "success"
-                          ? "1px solid rgba(34, 197, 94, 0.3)"
-                          : "1px solid rgba(239, 68, 68, 0.3)",
-                        borderRadius: "10px",
-                        color: submitStatus === "success" ? "#4ade80" : "#f87171",
-                        textAlign: "center",
-                        fontSize: "0.95rem",
-                        marginTop: "1rem"
-                      }}
+                      className={`form-status ${submitStatus}`}
                     >
                       {submitStatus === "success" 
                         ? "✅ Message sent successfully! I'll get back to you soon."
@@ -439,64 +265,24 @@ function Contact() {
             </form>
           </motion.div>
 
-          {/* Open to Opportunities Card - Fixed height */}
+          {/* Open to Opportunities Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             viewport={{ once: true }}
-            style={{
-              background: "linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(139, 92, 246, 0.05))",
-              borderRadius: "20px",
-              padding: "2.5rem",
-              border: "1px solid rgba(56, 189, 248, 0.15)",
-              backdropFilter: "blur(10px)",
-              height: "300px",  // Fixed height
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center"
-            }}
+            className="contact-card contact-card-sm"
           >
-            <div style={{ 
-              fontSize: "3rem", 
-              marginBottom: "1.5rem", 
-              textAlign: "center",
-              color: "#38bdf8"
-            }}>
+            <div className="opportunities-emoji">
               💼
             </div>
-            <h4 style={{ 
-              fontSize: "1.5rem", 
-              marginBottom: "1rem",
-              color: "#38bdf8",
-              textAlign: "center"
-            }}>
+            <h4 className="opportunities-title">
               Open to Opportunities
             </h4>
-            <p style={{ 
-              fontSize: "1rem", 
-              opacity: 0.8,
-              lineHeight: 1.6,
-              marginBottom: "1.5rem",
-              textAlign: "center"
-            }}>
+            <p className="opportunities-text">
               Currently available for freelance projects and full-time opportunities in web & game development.
             </p>
-            <div style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "center",
-              gap: "0.5rem",
-              padding: "0.8rem 1.5rem",
-              background: "rgba(56, 189, 248, 0.1)",
-              borderRadius: "20px",
-              border: "1px solid rgba(56, 189, 248, 0.3)",
-              fontSize: "0.95rem",
-              color: "#38bdf8",
-              fontWeight: 500,
-              margin: "0 auto",
-              width: "fit-content"
-            }}>
+            <div className="opportunities-badge">
               <FaMapMarkerAlt />
               <span>Don't hesitate to get in touch with me</span>
             </div>
@@ -504,33 +290,20 @@ function Contact() {
         </div>
 
         {/* RIGHT COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-          {/* Contact Information - Fixed height */}
+        <div className="contact-right-column">
+          {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            style={{
-              background: "rgba(15, 23, 42, 0.85)",
-              borderRadius: "20px",
-              border: "1px solid rgba(56, 189, 248, 0.15)",
-              padding: "2.5rem",
-              backdropFilter: "blur(10px)",
-              height: "650px",  // Fixed height - same as form
-              display: "flex",
-              flexDirection: "column"
-            }}
+            className="contact-card contact-info-card"
           >
-            <h3 style={{ 
-              fontSize: "1.8rem", 
-              marginBottom: "1.5rem",
-              color: "#38bdf8"
-            }}>
+            <h3 className="contact-card-header">
               Contact Information
             </h3>
             
-            <div style={{ display: "grid", gap: "1.2rem", flex: 1 }}>
+            <div className="contact-info-grid">
               {contactInfo.map((info, index) => (
                 <motion.a
                   key={index}
@@ -538,48 +311,24 @@ function Contact() {
                   target={info.action?.startsWith('http') ? "_blank" : undefined}
                   rel={info.action?.startsWith('http') ? "noopener noreferrer" : undefined}
                   whileHover={{ x: 5 }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1rem",
-                    textDecoration: "none",
-                    padding: "1.2rem",
-                    background: "rgba(56, 189, 248, 0.03)",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(56, 189, 248, 0.1)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer"
-                  }}
+                  className="contact-info-item"
                 >
-                  <div style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "12px",
-                    background: `${info.color}15`,
-                    border: `1px solid ${info.color}30`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "1.3rem",
-                    color: info.color,
-                    flexShrink: 0
-                  }}>
+                  <div 
+                    className="contact-info-icon"
+                    style={{
+                      background: `${info.color}15`,
+                      border: `1px solid ${info.color}30`,
+                      color: info.color
+                    }}
+                  >
                     {info.icon}
                   </div>
                   
-                  <div style={{ flex: 1 }}>
-                    <div style={{ 
-                      fontSize: "0.9rem", 
-                      color: "#7dd3fc",
-                      marginBottom: "0.2rem"
-                    }}>
+                  <div className="contact-info-content">
+                    <div className="contact-info-title">
                       {info.title}
                     </div>
-                    <div style={{ 
-                      fontSize: "1rem", 
-                      color: "#f8fafc",
-                      fontWeight: 500
-                    }}>
+                    <div className="contact-info-value">
                       {info.value}
                     </div>
                   </div>
@@ -588,46 +337,23 @@ function Contact() {
             </div>
           </motion.div>
 
-          {/* Connect With Me - Fixed height */}
+          {/* Connect With Me */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             viewport={{ once: true }}
-            style={{
-              background: "rgba(15, 23, 42, 0.85)",
-              borderRadius: "20px",
-              border: "1px solid rgba(56, 189, 248, 0.15)",
-              padding: "2.5rem",
-              backdropFilter: "blur(10px)",
-              height: "300px",  // Fixed height - same as opportunities
-              display: "flex",
-              flexDirection: "column"
-            }}
+            className="contact-card contact-card-sm"
           >
-            <h3 style={{ 
-              fontSize: "1.8rem", 
-              marginBottom: "1.5rem",
-              color: "#38bdf8"
-            }}>
+            <h3 className="contact-card-header">
               Connect With Me
             </h3>
             
-            <p style={{ 
-              fontSize: "1rem", 
-              opacity: 0.8,
-              marginBottom: "1.5rem",
-              lineHeight: 1.6
-            }}>
+            <p className="opportunities-text">
               Follow me on social media to stay updated with my latest projects and insights.
             </p>
             
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "1rem",
-              flex: 1
-            }}>
+            <div className="social-grid">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={index}
@@ -636,30 +362,12 @@ function Contact() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  style={{
-                    padding: "1.2rem 0.8rem",
-                    background: "rgba(56, 189, 248, 0.05)",
-                    border: "1px solid rgba(56, 189, 248, 0.2)",
-                    borderRadius: "12px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.8rem",
-                    textDecoration: "none",
-                    color: "#f8fafc",
-                    transition: "all 0.3s ease",
-                    minHeight: "110px"
-                  }}
+                  className="social-item"
                 >
-                  <div style={{ fontSize: "1.8rem", color: "#38bdf8" }}>
+                  <div className="social-icon">
                     {social.icon}
                   </div>
-                  <span style={{ 
-                    fontSize: "0.9rem", 
-                    fontWeight: 500,
-                    textAlign: "center"
-                  }}>
+                  <span className="social-label">
                     {social.label}
                   </span>
                 </motion.a>
@@ -669,74 +377,37 @@ function Contact() {
         </div>
       </div>
 
-      {/* Technologies Section - Added above location info */}
+      {/* Technologies Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.7 }}
         viewport={{ once: true }}
-        style={{
-          marginTop: "4rem",
-          textAlign: "center"
-        }}
+        className="technologies-section"
       >
-        <h4 style={{ 
-          fontSize: "1.3rem", 
-          marginBottom: "1.5rem",
-          color: "#38bdf8",
-          fontWeight: 600
-        }}>
+        <h4 className="technologies-title">
           Technologies I Work With
         </h4>
-        <div style={{ 
-          display: "flex", 
-          flexWrap: "wrap", 
-          gap: "0.5rem", 
-          justifyContent: "center",
-          maxWidth: "800px",
-          margin: "0 auto"
-        }}>
+        <div className="technologies-list">
           {technologies.map((tech, index) => (
-            <span
-              key={index}
-              style={{
-                padding: "0.4rem 0.9rem",
-                background: "rgba(56, 189, 248, 0.07)",
-                borderRadius: "12px",
-                fontSize: "0.85rem",
-                color: "#7dd3fc",
-                border: "1px solid rgba(56, 189, 248, 0.1)",
-                fontWeight: 500
-              }}
-            >
+            <span key={index} className="technology-badge">
               {tech}
             </span>
           ))}
         </div>
       </motion.div>
 
-      {/* Location Info - Now below technologies */}
+      {/* Location Info */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
         viewport={{ once: true }}
-        style={{
-          marginTop: "3rem",
-          textAlign: "center"
-        }}
+        className="location-badge"
       >
-        <div style={{ 
-          display: "inline-flex", 
-          alignItems: "center", 
-          gap: "0.5rem",
-          padding: "0.8rem 1.5rem",
-          background: "rgba(56, 189, 248, 0.05)",
-          borderRadius: "20px",
-          border: "1px solid rgba(56, 189, 248, 0.2)"
-        }}>
-          <FaMapMarkerAlt style={{ color: "#38bdf8" }} />
-          <span style={{ fontSize: "0.95rem", opacity: 0.9 }}>
+        <div className="location-content">
+          <FaMapMarkerAlt className="location-icon" />
+          <span className="location-text">
             Based in Cebu City, Philippines • Open to Remote Work Worldwide
           </span>
         </div>

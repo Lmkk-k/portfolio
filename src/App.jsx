@@ -2,6 +2,7 @@ import Home from "./components/Home";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
+import Freelance from "./components/Freelance";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
 import AnimatedBackground from "./components/AnimatedBackground";
@@ -20,6 +21,7 @@ function App() {
       <Experience />
       <Skills />
       <Projects />
+      <Freelance />
       <Contact />
       <Footer/>
     </div>
