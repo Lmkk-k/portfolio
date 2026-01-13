@@ -98,12 +98,6 @@ function Contact() {
     { icon: <FaInstagram />, url: "https://www.instagram.com/lemarkkkk_/", label: "Instagram" }
   ];
 
-  const technologies = [
-    "React", "ASP.NET", "Godot", "Laravel", 
-    "Node.js", "C#", "GDScript", "Blender",
-    "SQL", "DBeaver", "Javascript", "Docker"
-  ];
-
   return (
     <section id="contact" className="contact-section">
       {/* Animated Background Elements */}
@@ -376,26 +370,6 @@ function Contact() {
           </motion.div>
         </div>
       </div>
-
-      {/* Technologies Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.7 }}
-        viewport={{ once: true }}
-        className="technologies-section"
-      >
-        <h4 className="technologies-title">
-          Technologies I Work With
-        </h4>
-        <div className="technologies-list">
-          {technologies.map((tech, index) => (
-            <span key={index} className="technology-badge">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </motion.div>
 
       {/* Location Info */}
       <motion.div

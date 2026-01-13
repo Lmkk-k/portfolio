@@ -8,15 +8,15 @@ const experiences = [
     company: "Fasthosts",
     date: "October 2025 – Present",
     points: [
-      "Provide technical support for DNS servers, domain management, email packages, website builders, and hosting services",
-      "Assist with domain configuration and DNS records (A, CNAME, MX, TXT)",
-      "Support WordPress websites including installation and troubleshooting",
+      "DNS servers, domain management, email packages, website builders, and hosting services",
+      "Domain configuration and DNS records (A, CNAME, MX, TXT)",
+      "WordPress websites including installation and troubleshooting",
       "Handle email setup, configuration, and common email issues",
       "Troubleshoot FTP access, file permissions, and connectivity issues",
       "Use PuTTY (SSH) for basic server diagnostics",
       "Investigate website availability and hosting-related issues",
     ],
-    stack: ["DNS", "WordPress", "FTP", "SSH", "Email Systems", "Web Hosting"],
+    stack: ["DNS", "WordPress", "FTP", "SSH", "Email Systems", "Web Hosting", "Website Builder"],
   },
   {
     role: "Freelance Web Developer",
@@ -42,7 +42,7 @@ const experiences = [
       "Developed a Pet Services Website with online inquiry and appointment scheduling",
       "Designed and implemented frontend and backend components",
     ],
-    stack: ["React", "Laravel", "Docker", "Git", "MySQL", "JavaScript", "PHP"],
+    stack: ["React", "Laravel", "Docker", "Git", "DBeaver", "JavaScript", "PHP"],
   },
 ];
 
@@ -89,7 +89,7 @@ function Experience() {
         className="experience-title-container"
       >
         <motion.h2 className="experience-title">
-          <span className="experience-title-text">Background & Experience</span>
+          <span className="experience-title-text">Career Timeline</span>
           <motion.div
             className="experience-title-underline"
             initial={{ width: 0 }}

@@ -4,9 +4,11 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 const links = [
   { name: "Home", id: "home" },
-  { name: "Experience", id: "experience" },
-  { name: "Skills", id: "skills" },
   { name: "Projects", id: "projects" },
+  { name: "Expertise", id: "skills" },
+  { name: "Timeline", id: "experience" },
+  // { name: "Expertise", id: "skills" },
+  // { name: "Projects", id: "projects" },
   { name: "Freelance", id: "freelance" },
   { name: "Contact", id: "contact" },
 ];

@@ -1,65 +1,119 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../Frontend CSS/Skills.css";
 
 const skillCategories = [
   {
     title: "Frontend Development",
     icon: "💻",
-    description: "Creating dynamic, responsive, and user-friendly interfaces using modern frontend technologies such as React, JavaScript, and TypeScript. Focused on building seamless web applications that prioritize performance, accessibility, and exceptional user experience.",
+    description: "Building responsive, dynamic interfaces with React, JavaScript, and modern frameworks.",
     color: "#38bdf8",
-    stack: ["React", "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Framer Motion", "Responsive Design"]
+    techStack: ["React", "Vue.js", "Angular", "TypeScript", "Tailwind CSS", "SASS", "Redux", "Next.js"]
   },
   {
     title: "Backend Development",
     icon: "⚙️",
-    description: "Building robust server-side applications, RESTful APIs, and database architectures using Node.js and Laravel. Experienced in creating scalable backend systems with proper authentication, security, and performance optimization.",
+    description: "Creating scalable server-side applications, REST APIs, and database architectures.",
     color: "#0ea5e9",
-    stack: ["Node.js", "Laravel", "PHP", "Dbeaver", "REST APIs", "MySQL"]
+    techStack: ["Node.js", "Express", "Laravel", "Python", "Django", "FastAPI", "REST APIs", "GraphQL"]
   },
   {
     title: "Mobile Development",
     icon: "📱",
-    description: "Developing cross-platform mobile applications using React Native, with experience in building responsive mobile interfaces, native module integration, and mobile-specific performance optimization.",
+    description: "Developing cross-platform mobile apps with React Native for iOS and Android.",
     color: "#7c3aed",
-    stack: ["React Native", "Mobile UI/UX", "Cross-platform", "App Deployment", "Native Modules", "Mobile Testing", "App Store Guidelines"]
+    techStack: ["React Native", "Flutter", "iOS", "Android", "Expo", "Firebase", "Push Notifications"]
   },
   {
-    title: "Website Builders & CMS",
+    title: "WordPress & CMS",
     icon: "🌐",
-    description: "Expert in WordPress development including custom theme creation, plugin development, and website optimization. Skilled in using website builders and content management systems to deliver client-ready solutions.",
+    description: "Expert in WordPress development, custom themes, plugins, and website optimization.",
     color: "#0284c7",
-    stack: ["WordPress", "Custom Themes", "Plugin Development", "Website Optimization", "DNS Management", "FTP/SSH", "Email Configuration"]
+    techStack: ["WordPress", "WooCommerce", "PHP", "Custom Themes", "Plugin Dev", "SEO", "Elementor"]
   },
   {
     title: "Database & DevOps",
     icon: "🗃️",
-    description: "Managing database systems and implementing DevOps practices for efficient application deployment and maintenance. Experienced in containerization, version control, and cloud services for scalable solutions.",
+    description: "Managing databases, containerization, and implementing DevOps practices.",
     color: "#0369a1",
-    stack: ["MySQL", "PostgreSQL", "MongoDB", "Docker", "Git/GitHub", "AWS Basics", "Database Design", "CI/CD"]
+    techStack: ["MySQL", "PostgreSQL", "MongoDB", "Docker", "AWS", "CI/CD", "Redis", "Nginx"]
   },
   {
     title: "Technical Support",
     icon: "🔧",
-    description: "Providing comprehensive technical support for web hosting, DNS management, email systems, and server troubleshooting. Expert in diagnosing and resolving complex technical issues efficiently.",
+    description: "Providing comprehensive technical support and troubleshooting solutions.",
     color: "#075985",
-    stack: ["DNS Management", "Web Hosting", "Email Systems", "Troubleshooting", "Server Diagnostics", "Security", "Performance Optimization"]
+    techStack: ["Troubleshooting", "Debugging", "System Admin", "Networking", "Security", "Documentation"]
   }
 ];
 
-const softSkills = [
-  { name: "Problem Solving", icon: "🧩" },
-  { name: "Clean Architecture", icon: "🏗️" },
-  { name: "Agile/Scrum", icon: "🔄" },
-  { name: "Code Optimization", icon: "⚡" },
-  { name: "Cross-browser Testing", icon: "🌐" },
-  { name: "API Integration", icon: "🔗" },
-  { name: "Documentation", icon: "📄" },
-  { name: "Team Collaboration", icon: "👥" },
+// Split tools into two categories
+const frontendTools = [
+  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+  { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+  { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+  { name: "Vue.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+  { name: "Angular", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
+  { name: "Redux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" },
+  { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+  { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+  { name: "SASS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" },
+  { name: "Bootstrap", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" },
+  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  { name: "Framer", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framer/framer-original.svg" }
+];
+
+const backendTools = [
+  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+  { name: "Laravel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" },
+  { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+  { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" },
+  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+  { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+  { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
+  { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+  { name: "React Native", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Flutter", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
+  { name: "Swift", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
+  { name: "Kotlin", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
+  { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" }
 ];
 
 function Skills() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [frontendPosition, setFrontendPosition] = useState(0);
+  const [backendPosition, setBackendPosition] = useState(0);
+
+  // Frontend slider moves left to right (normal)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFrontendPosition(prev => {
+        const newPosition = prev - 0.3;
+        return newPosition < -50 ? 0 : newPosition;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Backend slider moves right to left (vice versa)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBackendPosition(prev => {
+        const newPosition = prev + 0.3; // Positive for right-to-left
+        return newPosition > 0 ? -50 : newPosition;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section id="skills" className="skills-container">
@@ -85,7 +139,7 @@ function Skills() {
         className="skills-header"
       >
         <motion.h2 className="skills-title">
-          <span className="skills-title-text">Technical Expertise</span>
+          <span className="skills-title-text">Expertise & Tools</span>
           <motion.div
             className="skills-title-underline"
             initial={{ width: 0 }}
@@ -94,7 +148,7 @@ function Skills() {
           />
         </motion.h2>
         <p className="skills-subtitle">
-          A comprehensive overview of my technical skills across full-stack development and IT support
+          Full-stack development expertise with modern technologies
         </p>
       </motion.div>
 
@@ -130,80 +184,197 @@ function Skills() {
               </div>
             </div>
 
-            {/* Description */}
+            {/* Short Description */}
             <p className="skill-description">
               {category.description}
             </p>
 
-            {/* Tech Stack */}
+            {/* TECH STACK SECTION */}
             <div className="skill-tech-stack">
-              <h4 className="skill-stack-title">Tech Stack</h4>
-              <div className="skill-stack-list">
-                {category.stack.map((tech, techIndex) => (
-                  <motion.span
-                    key={tech}
-                    className="skill-stack-item"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: techIndex * 0.05 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(56, 189, 248, 0.15)" }}
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
-              </div>
+              {category.techStack.map((tech, index) => (
+                <span key={index} className="tech-stack-item">
+                  {tech}
+                </span>
+              ))}
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* SOFT SKILLS */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="soft-skills-container"
-      >
-        <h3 className="soft-skills-title">
-          Additional Skills & Capabilities
-        </h3>
+      {/* TWO SLIDERS SECTION */}
+      <div className="dual-sliders-container">
         
-        <div className="soft-skills-grid">
-          {softSkills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              className="soft-skill-item"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(56, 189, 248, 0.1)" }}
+        {/* FRONTEND SLIDER */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="slider-section"
+        >
+          <h3 className="slider-title frontend-title">
+            <span className="slider-title-icon"></span> 
+            Frontend
+          </h3>
+          
+          <div className="slider-wrapper">
+            <div 
+              className="tools-slider"
+              style={{ transform: `translateX(${frontendPosition}%)` }}
             >
-              <span className="soft-skill-icon">{skill.icon}</span>
-              <span className="soft-skill-name">{skill.name}</span>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+              {/* First Set */}
+              {frontendTools.map((tool, index) => (
+                <motion.div
+                  key={`frontend-${tool.name}-1`}
+                  className="tool-item frontend-tool"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <div className="tool-icon">
+                    <img 
+                      src={tool.icon} 
+                      alt={tool.name}
+                      className="tool-logo"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg`;
+                        e.target.alt = `${tool.name} logo`;
+                      }}
+                    />
+                  </div>
+                  <span className="tool-name">{tool.name}</span>
+                </motion.div>
+              ))}
+              
+              {/* Duplicate Set for Seamless Loop */}
+              {frontendTools.map((tool, index) => (
+                <motion.div
+                  key={`frontend-${tool.name}-2`}
+                  className="tool-item frontend-tool"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <div className="tool-icon">
+                    <img 
+                      src={tool.icon} 
+                      alt={tool.name}
+                      className="tool-logo"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg`;
+                        e.target.alt = `${tool.name} logo`;
+                      }}
+                    />
+                  </div>
+                  <span className="tool-name">{tool.name}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
 
-      {/* CONTINUOUS LEARNING */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        viewport={{ once: true }}
-        className="learning-container"
-      >
-        <p className="learning-text">
-          Continuously expanding my skill set. Currently exploring{" "}
-          <span className="learning-highlight">
-            Next.js, GraphQL, advanced cloud infrastructure, and Flutter
-          </span> 
-          {" "}to build more scalable and performant applications across all platforms.
-        </p>
-      </motion.div>
+        {/* BACKEND SLIDER */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="slider-section"
+        >
+          <h3 className="slider-title backend-title">
+            <span className="slider-title-icon"></span> 
+            Backend
+          </h3>
+          
+          <div className="slider-wrapper">
+            <div 
+              className="tools-slider reverse-slider"
+              style={{ transform: `translateX(${backendPosition}%)` }}
+            >
+              {/* First Set */}
+              {backendTools.map((tool, index) => (
+                <motion.div
+                  key={`backend-${tool.name}-1`}
+                  className="tool-item backend-tool"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <div className="tool-icon">
+                    <img 
+                      src={tool.icon} 
+                      alt={tool.name}
+                      className="tool-logo"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg`;
+                        e.target.alt = `${tool.name} logo`;
+                      }}
+                    />
+                  </div>
+                  <span className="tool-name">{tool.name}</span>
+                </motion.div>
+              ))}
+              
+              {/* Duplicate Set for Seamless Loop */}
+              {backendTools.map((tool, index) => (
+                <motion.div
+                  key={`backend-${tool.name}-2`}
+                  className="tool-item backend-tool"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <div className="tool-icon">
+                    <img 
+                      src={tool.icon} 
+                      alt={tool.name}
+                      className="tool-logo"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg`;
+                        e.target.alt = `${tool.name} logo`;
+                      }}
+                    />
+                  </div>
+                  <span className="tool-name">{tool.name}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+      </div>
     </section>
   );
 }

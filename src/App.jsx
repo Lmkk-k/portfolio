@@ -18,9 +18,11 @@ function App() {
       <AnimatedBackground/>
       <Navbar/>
       <Home />
-      <Experience />
-      <Skills />
       <Projects />
+      <Skills />
+      <Experience />
+      {/* <Skills /> */}
+      {/* <Projects /> */}
       <Freelance />
       <Contact />
       <Footer/>
